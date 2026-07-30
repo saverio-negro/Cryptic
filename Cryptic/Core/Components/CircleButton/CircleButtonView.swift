@@ -35,8 +35,6 @@ struct CircleButtonView: View {
 }
 
 #Preview("Dark Mode", traits: .sizeThatFitsLayout) {
-    Group {
         CircleButtonView(iconName: "plus")
-    }
-    .environment(\EnvironmentValues.colorScheme, .dark)
+            .preferredColorScheme(.dark)
 }

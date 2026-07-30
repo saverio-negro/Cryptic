@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-extension Color {
+extension ShapeStyle where Self == Color {
     @MainActor
-    static let theme: any ColorTheme = DefaultColorTheme()
+    static var theme: ColorTheme {
+        return DefaultColorTheme()
+    }
 }
 
 
