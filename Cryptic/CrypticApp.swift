@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct CrypticApp: App {    
+struct CrypticApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {

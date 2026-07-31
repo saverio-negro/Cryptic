@@ -23,7 +23,7 @@ extension Preview {
 
 class PreviewService {
     @MainActor
-    static fileprivate let shared = PreviewService()
+    static let shared = PreviewService()
     private init() {}
     
     let coin = Coin(
