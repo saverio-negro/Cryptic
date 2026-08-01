@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-protocol NetworkService {
+protocol NetworkService: Sendable {
     associatedtype URLString: StringProtocol
     associatedtype Datum: Codable
     
     var urlString: URLString { get }
-    func fetchData(_ from: URLString) -> [Datum]
+    func fetchData() async throws -> [Datum]
 }
 

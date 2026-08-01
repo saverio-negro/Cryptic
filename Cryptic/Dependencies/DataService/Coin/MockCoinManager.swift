@@ -1,29 +1,18 @@
 //
-//  CoinManager.swift
+//  MockCoinManager.swift
 //  Cryptic
 //
 //  Created by Saverio Negro on 8/1/26.
 //
 
-import Foundation
+import SwiftUI
 
-class CoinManager: CoinDataService {
+actor MockCoinManager: CoinDataService {
     
-    let networkService: CoinNetworkService?
+    var data: [Coin] = []
     
-    init(networkService: CoinNetworkService?) {
-        self.networkService = networkService
-    }
-    
-    func getData() -> [Coin] {
-        guard let networkService = networkService else {
-            return getFakeCoins()
-        }
-        return networkService.fetchData("")
-    }
-    
-    func getFakeCoins() -> [Coin] {
-        return [
+    func getData() async -> [Coin] {
+        self.data = [
             Coin(
                 id: "bitcoin",
                 symbol: "btc",
@@ -229,5 +218,7 @@ class CoinManager: CoinDataService {
                 currentHoldings: 3
             )
         ]
+        return self.data
     }
 }
+

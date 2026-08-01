@@ -10,7 +10,7 @@ import SwiftUI
 // Define the abstract type that the
 // HomeViewModel is going to delegate
 // its functionalities to
-protocol HomeViewModelDelegate {
-    func getCoins() -> [Coin]
+protocol HomeViewModelDelegate: Sendable {
+    func getCoins() async -> [Coin]
 }
 

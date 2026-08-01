@@ -7,9 +7,12 @@
 
 import SwiftUI
 
-class HomeViewModel: ObservableObject {
+@Observable
+@MainActor
+class HomeViewModel{
+    
     private let delegate: HomeViewModelDelegate
-    @Published private var _coins: [Coin] = []
+    private var _coins: [Coin] = []
     
     var coins: [Coin] {
         get {
@@ -25,8 +28,8 @@ class HomeViewModel: ObservableObject {
         self.delegate = delegate
     }
     
-    func getCoins() {
-        self.coins = self.delegate.getCoins()
+    func loadCoins() async {
+        self._coins = await self.delegate.getCoins()
     }
 }
 

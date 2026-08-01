@@ -10,15 +10,7 @@ import SwiftUI
 struct HomeView: View {
     
     @State private var showPortfolio: Bool = false
-    @StateObject private var homeViewModel: HomeViewModel
-    
-    init(container: DependencyContainer) {
-        self._homeViewModel = StateObject(
-            wrappedValue: HomeViewModel(
-                delegate: ProductionHomeViewModelDelegate(container: container)
-            )
-        )
-    }
+    @State var homeViewModel: HomeViewModel
     
     var body: some View {
         ZStack {
@@ -39,22 +31,34 @@ struct HomeView: View {
                 Spacer(minLength: 0)
             }
         }
-        .onAppear {
-            homeViewModel.getCoins()
+        .task {
+            await homeViewModel.loadCoins()
         }
     }
 }
 
 struct HomeViewLight_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(container: previewService.container)
+        HomeView(
+            homeViewModel: HomeViewModel(
+                delegate: MockHomeViewModelDelegate(
+                    testContainer: previewService.testContainer
+                )
+            )
+        )
     }
 }
 
 struct HomeViewDark_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(container: previewService.container)
-            .preferredColorScheme(.dark)
+        HomeView(
+            homeViewModel: HomeViewModel(
+                delegate: MockHomeViewModelDelegate(
+                    testContainer: previewService.testContainer
+                )
+            )
+        )
+        .preferredColorScheme(.dark)
     }
 }
 

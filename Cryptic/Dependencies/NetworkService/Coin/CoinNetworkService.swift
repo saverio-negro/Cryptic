@@ -7,16 +7,5 @@
 
 import SwiftUI
 
-class CoinNetworkService: NetworkService {
-    
-    let urlString: String
-    
-    init(urlString: String) {
-        self.urlString = urlString
-    }
-    
-    func fetchData(_ from: String) -> [Coin] {
-        return []
-    }
-}
+protocol CoinNetworkService: NetworkService where URLString == String, Datum == Coin {}
 

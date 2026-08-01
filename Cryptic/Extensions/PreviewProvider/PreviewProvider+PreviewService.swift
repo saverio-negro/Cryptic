@@ -22,14 +22,15 @@ extension Preview {
 }
 
 class PreviewService {
+    
     @MainActor
     static let shared = PreviewService()
     private init() {}
     
-    let container: DependencyContainer = {
-        let container = DependencyContainer()
-        container.set(CoinManager.self, dependency: CoinManager(networkService: nil))
-        return container
+    let testContainer = {
+        let testContainer = DependencyContainer()
+        testContainer.set(MockCoinManager.self, dependency: MockCoinManager())
+        return testContainer
     }()
     
     let coin = Coin(
