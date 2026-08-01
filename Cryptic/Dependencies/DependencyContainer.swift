@@ -16,13 +16,13 @@ class DependencyContainer {
         return self.dependencies[keyStr]!
     }
     
-    func add<T>(_ dependency: T) {
-        let keyStr = String("\(T.self)")
+    func set<T>(_ key: T.Type, dependency: T) {
+        let keyStr = String("\(key)")
         self.dependencies[keyStr] = dependency
     }
     
-    func add<T>(_ dependency: () -> T) {
-        let keyStr = String("\(T.self)")
+    func set<T>(_ key: T.Type, dependency: () -> T) {
+        let keyStr = String("\(key)")
         self.dependencies[keyStr] = dependency()
     }
 }

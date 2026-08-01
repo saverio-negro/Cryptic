@@ -28,7 +28,7 @@ class PreviewService {
     
     let container: DependencyContainer = {
         let container = DependencyContainer()
-        container.add(CoinManager(networkService: nil))
+        container.set(CoinManager.self, dependency: CoinManager(networkService: nil))
         return container
     }()
     

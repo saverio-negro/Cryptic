@@ -25,7 +25,7 @@ struct CrypticApp: App {
                     .toolbar(.hidden)
             }
             .onAppear {
-                dependencyContainer.add(CoinManager(networkService: nil))
+                dependencyContainer.set(CoinManager.self, dependency: CoinManager(networkService: nil))
             }
         }
     }
