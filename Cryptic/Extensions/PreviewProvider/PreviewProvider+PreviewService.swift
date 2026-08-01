@@ -21,10 +21,11 @@ extension Preview {
     }
 }
 
+
 class PreviewService {
     
     @MainActor
-    static let shared = PreviewService()
+    static fileprivate let shared = PreviewService()
     private init() {}
     
     let testContainer = {
@@ -32,6 +33,11 @@ class PreviewService {
         testContainer.set(MockCoinManager.self, dependency: MockCoinManager())
         return testContainer
     }()
+    
+    @MainActor
+    var homeViewModel: HomeViewModel {
+        return HomeViewModel(delegate: MockHomeViewModelDelegate(testContainer: PreviewService.shared.testContainer))
+    }
     
     let coin = Coin(
         id: "bitcoin",

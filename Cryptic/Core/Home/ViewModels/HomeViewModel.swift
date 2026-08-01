@@ -13,8 +13,19 @@ class HomeViewModel{
     
     private let delegate: HomeViewModelDelegate
     private var _coins: [Coin] = []
+    private var _portfolioCoins: [Coin] = []
     
     var coins: [Coin] {
+        get {
+            self._coins
+        }
+        
+        set {
+            self._coins = newValue
+        }
+    }
+    
+    var portfolioCoins: [Coin] {
         get {
             self._coins
         }
@@ -30,6 +41,7 @@ class HomeViewModel{
     
     func loadCoins() async {
         self._coins = await self.delegate.getCoins()
+        self._portfolioCoins = await self.delegate.getCoins()
     }
 }
 

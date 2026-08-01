@@ -12,6 +12,10 @@ actor MockCoinManager: CoinDataService {
     var data: [Coin] = []
     
     func getData() async -> [Coin] {
+        
+        // Simulate fetching data from API's endpoint
+        try? await Task.sleep(nanoseconds: 2_000_000_000)
+        
         self.data = [
             Coin(
                 id: "bitcoin",

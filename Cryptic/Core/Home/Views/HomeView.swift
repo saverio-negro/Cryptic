@@ -11,6 +11,7 @@ struct HomeView: View {
     
     @State private var showPortfolio: Bool = false
     @State var homeViewModel: HomeViewModel
+    @State var start: Date = Date()
     
     var body: some View {
         ZStack {
@@ -21,15 +22,20 @@ struct HomeView: View {
             // Content layer
             VStack {
                 homeHeader
-                List {
-                    ForEach(homeViewModel.coins) { coin in
-                        CoinRowView(coin: coin, showHoldingsColumn: showPortfolio)
-                    }
+                
+                columnTitles
+                
+                if showPortfolio {
+                    portfolioCoinsList
+                        .transition(.move(edge: .trailing))
+                } else {
+                    allCoinsList
+                        .transition(.move(edge: .leading))
                 }
-                .listStyle(.plain)
                 
                 Spacer(minLength: 0)
             }
+            
         }
         .task {
             await homeViewModel.loadCoins()
@@ -39,25 +45,22 @@ struct HomeView: View {
 
 struct HomeViewLight_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(
-            homeViewModel: HomeViewModel(
-                delegate: MockHomeViewModelDelegate(
-                    testContainer: previewService.testContainer
-                )
+        NavigationStack {
+            HomeView(
+                homeViewModel: previewService.homeViewModel
             )
-        )
+        }
+        
     }
 }
 
 struct HomeViewDark_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(
-            homeViewModel: HomeViewModel(
-                delegate: MockHomeViewModelDelegate(
-                    testContainer: previewService.testContainer
-                )
+        NavigationStack {
+            HomeView(
+                homeViewModel: previewService.homeViewModel
             )
-        )
+        }
         .preferredColorScheme(.dark)
     }
 }
@@ -89,5 +92,58 @@ extension HomeView {
                 }
         }
         .padding(.horizontal)
+    }
+    
+    private var allCoinsList: some View {
+        List {
+            ForEach(homeViewModel.coins) { coin in
+                CoinRowView(coin: coin, showHoldingsColumn: false)
+                    .listRowInsets(
+                        .init(
+                            top: 10,
+                            leading: 0,
+                            bottom: 10,
+                            trailing: 10
+                        )
+                    )
+            }
+        }
+        .listStyle(.plain)
+    }
+    
+    private var portfolioCoinsList: some View {
+        List {
+            ForEach(homeViewModel.portfolioCoins) { coin in
+                CoinRowView(coin: coin, showHoldingsColumn: true)
+                    .listRowInsets(
+                        .init(
+                            top: 10,
+                            leading: 0,
+                            bottom: 10,
+                            trailing: 10
+                        )
+                    )
+            }
+        }
+        .listStyle(.plain)
+    }
+    
+    private var columnTitles: some View {
+        GeometryReader { geoProxy in
+            HStack {
+                Text("Coin")
+                Spacer()
+                if showPortfolio {
+                    Text("Holdings")
+                }
+                Text("Price")
+                    .frame(width: geoProxy.size.width / 3.5, alignment: .trailing)
+            }
+            .font(.caption)
+            .foregroundStyle(Color.theme.secondaryText)
+            .padding(.horizontal)
+        }
+        .frame(height: 20)
+        .frame(maxWidth: .infinity)
     }
 }
