@@ -10,6 +10,15 @@ import SwiftUI
 struct HomeView: View {
     
     @State private var showPortfolio: Bool = false
+    @StateObject private var homeViewModel: HomeViewModel
+    
+    init(container: DependencyContainer) {
+        self._homeViewModel = StateObject(
+            wrappedValue: HomeViewModel(
+                delegate: ProductionHomeViewModelDelegate(container: container)
+            )
+        )
+    }
     
     var body: some View {
         ZStack {
@@ -20,34 +29,33 @@ struct HomeView: View {
             // Content layer
             VStack {
                 homeHeader
-                
                 List {
-                    CoinRowView(
-                        coin: PreviewService.shared.coin,
-                        showHoldingsColumn: showPortfolio
-                    )
+                    ForEach(homeViewModel.coins) { coin in
+                        CoinRowView(coin: coin, showHoldingsColumn: showPortfolio)
+                    }
                 }
                 .listStyle(.plain)
                 
                 Spacer(minLength: 0)
             }
         }
+        .onAppear {
+            homeViewModel.getCoins()
+        }
     }
 }
 
-#Preview("Home View: Light Mode") {
-    NavigationStack {
-        HomeView()
-            .toolbar(.hidden)
+struct HomeViewLight_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView(container: previewService.container)
     }
 }
 
-#Preview("Home View: Dark Mode") {
-    NavigationStack {
-        HomeView()
-            .toolbar(.hidden)
+struct HomeViewDark_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView(container: previewService.container)
+            .preferredColorScheme(.dark)
     }
-    .colorScheme(.dark)
 }
 
 // MARK: - Home Header

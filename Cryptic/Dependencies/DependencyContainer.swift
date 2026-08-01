@@ -20,5 +20,10 @@ class DependencyContainer {
         let keyStr = String("\(T.self)")
         self.dependencies[keyStr] = dependency
     }
+    
+    func add<T>(_ dependency: () -> T) {
+        let keyStr = String("\(T.self)")
+        self.dependencies[keyStr] = dependency()
+    }
 }
 

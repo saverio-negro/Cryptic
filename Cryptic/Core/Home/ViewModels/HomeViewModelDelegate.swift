@@ -11,6 +11,6 @@ import SwiftUI
 // HomeViewModel is going to delegate
 // its functionalities to
 protocol HomeViewModelDelegate {
-    
+    func getCoins() -> [Coin]
 }
 

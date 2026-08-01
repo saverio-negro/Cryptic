@@ -14,4 +14,8 @@ class ProductionHomeViewModelDelegate: HomeViewModelDelegate {
     init(container: DependencyContainer) {
         self.coinManager = container.get(CoinManager.self) as! any DataService
     }
+    
+    func getCoins() -> [Coin] {
+        self.coinManager.getData() as! [Coin]
+    }
 }

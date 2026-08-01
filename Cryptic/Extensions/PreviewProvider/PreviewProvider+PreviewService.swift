@@ -26,6 +26,12 @@ class PreviewService {
     static let shared = PreviewService()
     private init() {}
     
+    let container: DependencyContainer = {
+        let container = DependencyContainer()
+        container.add(CoinManager(networkService: nil))
+        return container
+    }()
+    
     let coin = Coin(
         id: "bitcoin",
         symbol: "btc",

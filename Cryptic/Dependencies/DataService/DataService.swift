@@ -7,8 +7,8 @@
 
 import Foundation
 
-protocol DataService<Datum> {
+protocol DataService {
     associatedtype Datum
-    var data: [Datum] { get set }
+    func getData() -> [Datum]
 }
 
