@@ -2,12 +2,9 @@
 //  CoinDataService.swift
 //  Cryptic
 //
-//  Created by Saverio Negro on 8/1/26.
+//  Created by Saverio Negro on 8/10/26.
 //
 
-import SwiftUI
+import Foundation
 
 protocol CoinDataService: DataService where Datum == Coin {}
-
-
-

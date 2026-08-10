@@ -11,7 +11,6 @@ import SwiftUI
 @MainActor
 class HomeViewModel{
     
-    private let delegate: HomeViewModelDelegate
     private var _coins: [Coin] = []
     private var _portfolioCoins: [Coin] = []
     
@@ -35,13 +34,8 @@ class HomeViewModel{
         }
     }
     
-    init(delegate: HomeViewModelDelegate) {
-        self.delegate = delegate
-    }
-    
-    func loadCoins() async {
-        self._coins = await self.delegate.getCoins()
-        self._portfolioCoins = await self.delegate.getCoins()
+    init() {
+        
     }
 }
 

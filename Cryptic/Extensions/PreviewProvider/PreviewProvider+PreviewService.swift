@@ -28,12 +28,6 @@ class PreviewService {
     static fileprivate let shared = PreviewService()
     private init() {}
     
-    let testContainer = {
-        let testContainer = DependencyContainer()
-        testContainer.set(MockCoinManager.self, dependency: MockCoinManager())
-        return testContainer
-    }()
-    
     @MainActor
     var homeViewModel: HomeViewModel {
         return HomeViewModel(delegate: MockHomeViewModelDelegate(testContainer: PreviewService.shared.testContainer))
