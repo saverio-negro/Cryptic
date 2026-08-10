@@ -6,8 +6,13 @@
 //
 
 import Foundation
+import Combine
 
 protocol DataService: Actor {
     associatedtype Datum
     var data: [Datum] { get set }
+}
+
+protocol CombineDataService: DataService {
+    var publisher: Published<[Datum]>.Publisher { get }
 }

@@ -6,5 +6,8 @@
 //
 
 import Foundation
+import Combine
 
 protocol CoinDataService: DataService where Datum == Coin {}
+
+typealias CombineCoinDataService = CoinDataService & CombineDataService

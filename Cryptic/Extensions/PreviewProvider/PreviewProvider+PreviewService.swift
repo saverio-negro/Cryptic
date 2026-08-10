@@ -30,7 +30,7 @@ class PreviewService {
     
     @MainActor
     var homeViewModel: HomeViewModel {
-        return HomeViewModel(delegate: MockHomeViewModelDelegate(testContainer: PreviewService.shared.testContainer))
+        return HomeViewModel(dataService: MockCoinDataService())
     }
     
     let coin = Coin(

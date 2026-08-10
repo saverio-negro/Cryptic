@@ -6,13 +6,15 @@
 //
 
 import SwiftUI
+@preconcurrency import Combine
 
-@Observable
 @MainActor
-class HomeViewModel{
+class HomeViewModel: ObservableObject {
     
-    private var _coins: [Coin] = []
-    private var _portfolioCoins: [Coin] = []
+    @Published private var _coins: [Coin] = []
+    @Published private var _portfolioCoins: [Coin] = []
+    private let dataService: any CombineCoinDataService
+    private var cancellables: Set<AnyCancellable> = Set()
     
     var coins: [Coin] {
         get {
@@ -26,16 +28,22 @@ class HomeViewModel{
     
     var portfolioCoins: [Coin] {
         get {
-            self._coins
+            self._portfolioCoins
         }
         
         set {
-            self._coins = newValue
+            self._portfolioCoins = newValue
         }
     }
     
-    init() {
-        
+    init(dataService: any CombineCoinDataService) {
+        self.dataService = dataService
+        Task {
+            await self.dataService.publisher.sink { emittedCoins in
+                self.coins = emittedCoins
+            }
+            .store(in: &cancellables)
+        }
     }
 }
 

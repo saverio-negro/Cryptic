@@ -37,9 +37,6 @@ struct HomeView: View {
             }
             
         }
-        .task {
-            await homeViewModel.loadCoins()
-        }
     }
 }
 

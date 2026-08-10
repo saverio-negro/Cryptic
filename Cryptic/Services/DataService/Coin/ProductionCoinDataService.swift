@@ -8,12 +8,14 @@
 import Foundation
 import Combine
 
-actor ProductionCoinDataService: CoinDataService {
+actor ProductionCoinDataService: CombineCoinDataService {
     
     @Published var data: [Coin] = []
+    var publisher: Published<[Coin]>.Publisher {
+        return self.$data
+    }
     let networkService: any CombineCoinNetworkService
-    var cancellables = Set<AnyCancellable>()
-    
+    var coinSubscription: AnyCancellable? = nil
     
     init(networkService: any CombineCoinNetworkService) {
         self.networkService = networkService
@@ -26,8 +28,13 @@ actor ProductionCoinDataService: CoinDataService {
         }
     }
     
+    func setCoins(coins: [Coin]) -> Void {
+        self.data = coins
+        self.coinSubscription?.cancel()
+    }
+    
     private func getCoins() throws -> Void {
-        try networkService.fetchData().sink(
+        self.coinSubscription = try networkService.fetchData().sink(
             receiveCompletion: { completion in
                 switch completion {
                 case .finished:
@@ -36,10 +43,7 @@ actor ProductionCoinDataService: CoinDataService {
                     print(error.localizedDescription)
                 }
             },
-            receiveValue: { returnedCoins in
-                self.data = returnedCoins
-            }
+            receiveValue: setCoins
         )
-        .store(in: &cancellables)
     }
 }
