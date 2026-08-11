@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     
     @State private var showPortfolio: Bool = false
-    @State var homeViewModel: HomeViewModel
+    @StateObject var homeViewModel: HomeViewModel
     @State var start: Date = Date()
     
     var body: some View {
@@ -35,7 +35,6 @@ struct HomeView: View {
                 
                 Spacer(minLength: 0)
             }
-            
         }
     }
 }

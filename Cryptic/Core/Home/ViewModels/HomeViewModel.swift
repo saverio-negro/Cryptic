@@ -11,30 +11,10 @@ import SwiftUI
 @MainActor
 class HomeViewModel: ObservableObject {
     
-    @Published private var _coins: [Coin] = []
-    @Published private var _portfolioCoins: [Coin] = []
+    @Published var coins: [Coin] = []
+    @Published var portfolioCoins: [Coin] = []
     private let dataService: any CombineCoinDataService
     private var cancellables: Set<AnyCancellable> = Set()
-    
-    var coins: [Coin] {
-        get {
-            self._coins
-        }
-        
-        set {
-            self._coins = newValue
-        }
-    }
-    
-    var portfolioCoins: [Coin] {
-        get {
-            self._portfolioCoins
-        }
-        
-        set {
-            self._portfolioCoins = newValue
-        }
-    }
     
     init(dataService: any CombineCoinDataService) {
         self.dataService = dataService

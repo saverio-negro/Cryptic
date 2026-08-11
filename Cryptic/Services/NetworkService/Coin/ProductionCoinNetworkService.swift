@@ -28,10 +28,7 @@ final class ProductionCoinNetworkService: CombineCoinNetworkService {
         
         return URLSession.shared.dataTaskPublisher(for: url)
             .subscribe(on: DispatchQueue.global(qos: .default))
-            .tryMap { (output) -> Data in
-                
-                let (data, response) = output
-                
+            .tryMap { (data, response) -> Data in
                 guard
                     let response = response as? HTTPURLResponse,
                     response.statusCode >= 200 && response.statusCode < 300
