@@ -14,10 +14,10 @@ actor ProductionCoinDataService: CombineCoinDataService {
     var publisher: Published<[Coin]>.Publisher {
         return self.$data
     }
-    let networkService: any CombineCoinNetworkService
+    let networkService: any CombineNetworkService
     var coinSubscription: AnyCancellable? = nil
     
-    init(networkService: any CombineCoinNetworkService) {
+    init(networkService: any CombineNetworkService) {
         self.networkService = networkService
         Task {
             do {
@@ -34,16 +34,11 @@ actor ProductionCoinDataService: CombineCoinDataService {
     }
     
     private func getCoins() throws -> Void {
-        self.coinSubscription = try networkService.fetchData().sink(
-            receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            },
-            receiveValue: setCoins
-        )
+        self.coinSubscription = try networkService.fetchData()
+            .decode(type: [Coin].self, decoder: JSONDecoder())
+            .sink(
+                receiveCompletion: networkService.handleCompletion,
+                receiveValue: setCoins
+            )
     }
 }
