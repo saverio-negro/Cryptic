@@ -10,9 +10,20 @@ import Combine
 
 protocol DataService: Actor {
     associatedtype Datum
+}
+
+protocol SingleDataService: DataService {
+    var data: Datum? { get set }
+}
+
+protocol MultipleDataService: DataService {
     var data: [Datum] { get set }
 }
 
-protocol CombineDataService: DataService {
+protocol CombineSingleDataService: SingleDataService {
+    var publisher: Published<Datum?>.Publisher { get }
+}
+
+protocol CombineMultipleDataService: MultipleDataService {
     var publisher: Published<[Datum]>.Publisher { get }
 }
