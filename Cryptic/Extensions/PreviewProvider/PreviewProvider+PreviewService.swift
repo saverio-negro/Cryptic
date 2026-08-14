@@ -33,6 +33,19 @@ class PreviewService {
         return HomeViewModel(dataService: MockCoinDataService())
     }
     
+    @MainActor
+    var mockDependencyContainer: DependencyContainer {
+        let dependencyContainer = DependencyContainer()
+        
+        // Add mock data service for coins
+        dependencyContainer.set(
+            (any CombineCoinDataService).self,
+            value: MockCoinDataService()
+        )
+        
+        return dependencyContainer
+    }
+    
     let coin = Coin(
         id: "bitcoin",
         symbol: "btc",
