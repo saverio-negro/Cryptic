@@ -13,6 +13,18 @@ struct HomeView: View {
     @StateObject var homeViewModel: HomeViewModel
     @State var start: Date = Date()
     
+    init(dependencyContainer: DependencyContainer) {
+        let coinDataService = dependencyContainer.resolve(
+            (any CombineCoinDataService).self
+        ) as! any CombineCoinDataService
+        
+        self._homeViewModel = StateObject(
+            wrappedValue: HomeViewModel(
+                dataService: coinDataService
+            )
+        )
+    }
+    
     var body: some View {
         ZStack {
             // Background layer
@@ -43,7 +55,7 @@ struct HomeViewLight_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             HomeView(
-                homeViewModel: previewService.homeViewModel
+                dependencyContainer: self.previewService.mockDependencyContainer
             )
         }
         
@@ -54,7 +66,7 @@ struct HomeViewDark_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             HomeView(
-                homeViewModel: previewService.homeViewModel
+                dependencyContainer: self.previewService.mockDependencyContainer
             )
         }
         .preferredColorScheme(.dark)

@@ -52,8 +52,14 @@ extension CoinRowView {
             .foregroundStyle(Color.theme.secondaryText)
             .frame(minWidth: 30)
         
-        Circle()
-            .frame(width: 30, height: 30)
+        CoinImageView(
+            dataService: ProductionCoinImageDataService(
+                networkService: ProductionCombineNetworkService(
+                    urlString: coin.image
+                )
+            )
+        )
+        .frame(width: 30, height: 30)
         
         Text(coin.symbol.uppercased())
             .font(.headline)
