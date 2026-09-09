@@ -38,12 +38,12 @@ extension FileManagerService {
         in folderName: String?
     ) -> URL? {
         guard
-            let folderName = getURLForFolder(withName: folderName, in: directory)
+            let url = getURLForFolder(withName: folderName, in: directory)
         else {
             return nil
         }
         
-        return folderName.appending(path: name)
+        return url.appending(path: name)
     }
     
     func createFolder(withName folderName: String, in directory: FileManager.SearchPathDirectory) {
