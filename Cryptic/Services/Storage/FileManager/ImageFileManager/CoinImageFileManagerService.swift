@@ -31,19 +31,14 @@ enum ImageFileManagerServiceError: LocalizedError {
     }
 }
 
-class ImageFileManagerService: FileManagerService {
+class CoinImageFileManagerService: FileManagerService {
     
     typealias Value = UIImage
-    let imageFolderName: String
-    
-    init(imageFolderName: String) {
-        self.imageFolderName = imageFolderName
-    }
     
     func save(value: UIImage, fileName: String) throws {
         
         // Create folder if not yet existing
-        self.createFolder(withName: imageFolderName, in: .cachesDirectory)
+        self.createFolder(withName: "images", in: .cachesDirectory)
         
         // Encode image to data
         guard
@@ -57,7 +52,7 @@ class ImageFileManagerService: FileManagerService {
             let url = self.getURLForFile(
                 withName: fileName,
                 in: .cachesDirectory,
-                in: imageFolderName
+                in: "images"
             )
         else {
             throw ImageFileManagerServiceError.badFilePath
@@ -77,7 +72,7 @@ class ImageFileManagerService: FileManagerService {
             let url = self.getURLForFile(
             withName: fileName,
             in: .cachesDirectory,
-            in: imageFolderName
+            in: "images"
             )
         else {
             throw ImageFileManagerServiceError.badFilePath
