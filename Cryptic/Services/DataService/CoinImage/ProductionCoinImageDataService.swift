@@ -21,7 +21,7 @@ actor ProductionCoinImageDataService: CombineCoinImageDataService {
         self.networkService = networkService
         Task {
             do {
-                try await self.getCoinImage()
+                try await self.downloadCoinImage()
             } catch {
                 print("Error fetching coin image: \(error.localizedDescription)")
             }
@@ -33,7 +33,7 @@ actor ProductionCoinImageDataService: CombineCoinImageDataService {
         self.imageSubscription?.cancel()
     }
     
-    private func getCoinImage() throws -> Void {
+    private func downloadCoinImage() throws -> Void {
         
         print("Downloading image now.")
         
