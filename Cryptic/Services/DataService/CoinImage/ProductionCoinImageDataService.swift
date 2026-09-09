@@ -34,6 +34,9 @@ actor ProductionCoinImageDataService: CombineCoinImageDataService {
     }
     
     private func getCoinImage() throws -> Void {
+        
+        print("Downloading image now.")
+        
         self.imageSubscription = try networkService.fetchData()
             .tryMap { (data) -> UIImage? in
                 return UIImage(data: data)
