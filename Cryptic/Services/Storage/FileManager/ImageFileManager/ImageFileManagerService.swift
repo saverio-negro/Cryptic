@@ -31,6 +31,7 @@ enum ImageFileManagerServiceError: LocalizedError {
     }
 }
 
+
 class ImageFileManagerService: FileManagerService {
     
     typealias Value = UIImage

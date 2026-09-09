@@ -54,9 +54,11 @@ extension CoinRowView {
         
         CoinImageView(
             dataService: ProductionCoinImageDataService(
+                coinImageId: coin.id,
                 networkService: ProductionCombineNetworkService(
                     urlString: coin.image
-                )
+                ),
+                imageFMService: CoinImageFileManagerService()
             )
         )
         .frame(width: 30, height: 30)

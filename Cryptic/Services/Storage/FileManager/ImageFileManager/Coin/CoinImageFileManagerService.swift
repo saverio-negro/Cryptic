@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-class CoinImageFileManagerService: ImageFileManagerService {
-    
-    override init(imageFolderName: String) {
+final class CoinImageFileManagerService: ImageFileManagerService {
+    init() {
         super.init(imageFolderName: "coin-images")
     }
 }

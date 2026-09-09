@@ -43,9 +43,11 @@ struct CoinImageViewLight_Previews: PreviewProvider {
     static var previews: some View {
         CoinImageView(
             dataService: ProductionCoinImageDataService(
+                coinImageId: "1",
                 networkService: ProductionCombineNetworkService(
                     urlString: "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400"
-                )
+                ),
+                imageFMService: CoinImageFileManagerService()
             )
         )
         .padding()
@@ -57,9 +59,11 @@ struct CoinImageViewDark_Previews: PreviewProvider {
     static var previews: some View {
         CoinImageView(
             dataService: ProductionCoinImageDataService(
+                coinImageId: "1",
                 networkService: ProductionCombineNetworkService(
                     urlString: "https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400"
-                )
+                ),
+                imageFMService: CoinImageFileManagerService()
             )
         )
         .padding()
