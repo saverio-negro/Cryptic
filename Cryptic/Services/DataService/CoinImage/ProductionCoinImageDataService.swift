@@ -50,11 +50,9 @@ actor ProductionCoinImageDataService: CombineCoinImageDataService {
         do {
             let savedImage = try imageFMService.get(fileName: coinImageId)
             self.data = savedImage
-            print("Successfully retrieved image from the File Manager!")
         } catch {
             print("Error: \(error.localizedDescription)")
             do {
-                print("Downloading image now...")
                 try downloadCoinImage()
             } catch {
                 print("Error fetching coin image: \(error.localizedDescription)")
