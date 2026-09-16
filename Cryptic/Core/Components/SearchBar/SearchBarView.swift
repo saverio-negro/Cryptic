@@ -22,6 +22,7 @@ struct SearchBarView: View {
                 )
             
             TextField("Search by name or symbol", text: $searchText)
+                .autocorrectionDisabled()
                 .foregroundStyle(Color.theme.accent)
                 .overlay(alignment: .trailing) {
                     Image(systemName: "xmark.circle.fill")
