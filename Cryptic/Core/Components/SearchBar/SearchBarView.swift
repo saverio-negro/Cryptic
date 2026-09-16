@@ -24,18 +24,23 @@ struct SearchBarView: View {
             TextField("Search by name or symbol", text: $searchText)
                 .foregroundStyle(Color.theme.accent)
                 .overlay(alignment: .trailing) {
-                    if !isSearchTextEmpty {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(Color.theme.accent)
-                            .padding()
-                            .offset(x: 10)
-                            .onTapGesture {
-                                searchText = ""
-                            }
-                            .transition(AnyTransition.move(edge: .trailing))
-                    }
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(Color.theme.accent)
+                        .padding()
+                        .opacity(
+                            isSearchTextEmpty ? 0 : 1
+                        )
+                        .rotationEffect(
+                            isSearchTextEmpty ?
+                                .degrees(0) : .degrees(360)
+                        )
+                        .offset(x: 10)
+                        .onTapGesture {
+                            searchText = ""
+                        }
+                        .animation(.spring(duration: 0.8), value: isSearchTextEmpty)
                 }
-                .animation(.spring, value: isSearchTextEmpty)
+                
         }
         .font(.headline)
         .padding()
@@ -49,6 +54,7 @@ struct SearchBarView: View {
                     y: 0
                 )
         )
+        .padding()
     }
 }
 
