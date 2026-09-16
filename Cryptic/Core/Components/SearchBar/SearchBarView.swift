@@ -23,6 +23,9 @@ struct SearchBarView: View {
             
             TextField("Search by name or symbol", text: $searchText)
                 .autocorrectionDisabled()
+                .onSubmit {
+                    searchText = ""
+                }
                 .foregroundStyle(Color.theme.accent)
                 .overlay(alignment: .trailing) {
                     Image(systemName: "xmark.circle.fill")
@@ -40,7 +43,7 @@ struct SearchBarView: View {
                             UIApplication.shared.endEditing()
                             searchText = ""
                         }
-                        .animation(.spring(duration: 0.8), value: isSearchTextEmpty)
+                        .animation(.spring(duration: 0.5), value: isSearchTextEmpty)
                 }
                 
         }
