@@ -37,6 +37,7 @@ struct SearchBarView: View {
                         )
                         .offset(x: 10)
                         .onTapGesture {
+                            UIApplication.shared.endEditing()
                             searchText = ""
                         }
                         .animation(.spring(duration: 0.8), value: isSearchTextEmpty)
